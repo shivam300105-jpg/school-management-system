@@ -57,3 +57,4 @@ Route::get('/sections', [SectionController::class, 'index']);
 Route::get('/sections/{id}/edit', [SectionController::class, 'edit']);
 
 Route::put('/sections/{id}', [SectionController::class, 'update']);
+Route::delete('/sections/{id}', [SectionController::class, 'destroy']);

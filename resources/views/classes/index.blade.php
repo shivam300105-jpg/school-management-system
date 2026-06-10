@@ -18,6 +18,7 @@
     <tr>
         <th>ID</th>
         <th>Class Name</th>
+        <th>Modification</th>
         <th>Action</th>
     </tr>
 
@@ -30,7 +31,9 @@
                 <a href="/classes/{{ $class->id }}/edit">
                     Edit
                 </a>
+            </td>
 
+            <td>
                 <form action="/classes/{{ $class->id }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
