@@ -14,8 +14,23 @@ public function up(): void
     Schema::create('students', function (Blueprint $table) {
         $table->id();
 
-        $table->string('name');
-        $table->string('email');
+       $table->foreignId('class_id')
+      ->constrained('school_classes')
+      ->onDelete('cascade');
+
+$table->foreignId('section_id')
+      ->constrained('sections')
+      ->onDelete('cascade');
+
+$table->string('name');
+
+$table->string('email')->nullable();
+
+$table->string('phone')->nullable();
+
+$table->string('roll_no');
+
+$table->text('address')->nullable();
 
         $table->timestamps();
     });

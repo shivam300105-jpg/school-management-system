@@ -60,7 +60,7 @@
 
         <a href="/sections">Sections</a>
 
-        <a href="#">Students</a>
+        <a href="/students">Students</a>
 
         <a href="#">Staff</a>
 

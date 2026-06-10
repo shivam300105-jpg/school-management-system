@@ -7,8 +7,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/students', [StudentController::class, 'index']);
-
 Route::get('/staff', function () {
     return "Staff Page";
 });
@@ -58,3 +56,9 @@ Route::get('/sections/{id}/edit', [SectionController::class, 'edit']);
 
 Route::put('/sections/{id}', [SectionController::class, 'update']);
 Route::delete('/sections/{id}', [SectionController::class, 'destroy']);
+
+Route::get('/students/create', [StudentController::class, 'create']);
+
+Route::post('/students', [StudentController::class, 'store']);
+
+Route::get('/students', [StudentController::class, 'index']);

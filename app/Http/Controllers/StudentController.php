@@ -3,19 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SchoolClass;
+use App\Models\Section;
 
 use App\Models\Student;
 
 class StudentController extends Controller
 {
-    public function index()
-    
+public function index()
 {
-    $name = "Shivam";
+    $students = Student::with([
+        'schoolClass',
+        'section'
+    ])->get();
 
-    return view('students', [
-        'name' => $name
-    ]);
+    return view(
+        'students.index',
+        compact('students')
+    );
 }
 public function show(Request $request, $id)
 {
@@ -55,6 +60,37 @@ public function list()
     $students = Student::all();
 
     dd($students->toArray());
+}
+
+public function create()
+{
+    $classes = SchoolClass::all();
+
+    $sections = Section::all();
+
+return view('students.create', compact('classes'));}
+
+public function store(Request $request)
+{
+    $request->validate([
+        'class_id' => 'required',
+        'section_id' => 'required',
+        'name' => 'required',
+        'roll_no' => 'required'
+    ]);
+
+    Student::create([
+        'class_id' => $request->class_id,
+        'section_id' => $request->section_id,
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'roll_no' => $request->roll_no,
+        'address' => $request->address
+    ]);
+
+    return redirect('/students/create')
+        ->with('success', 'Student Added Successfully');
 }
 
 }

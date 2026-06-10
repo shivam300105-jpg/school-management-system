@@ -7,7 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $fillable = [
+        'class_id',
+        'section_id',
         'name',
-        'email'
+        'email',
+        'phone',
+        'roll_no',
+        'address'
     ];
+    public function schoolClass()
+{
+    return $this->belongsTo(SchoolClass::class, 'class_id');
+}
+
+public function section()
+{
+    return $this->belongsTo(Section::class, 'section_id');
+}
 }
