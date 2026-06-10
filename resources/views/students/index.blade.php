@@ -4,6 +4,12 @@
 
 <h2>All Students</h2>
 
+@if(session('success'))
+    <p style="color:green;">
+        {{ session('success') }}
+    </p>
+@endif
+
 <a href="/students/create">
     Add Student
 </a>
@@ -19,6 +25,9 @@
         <th>Name</th>
         <th>Roll No</th>
         <th>Phone</th>
+        <th>Modification</th>
+        <th>Action</th>
+
     </tr>
 
     @foreach($students as $student)
@@ -46,7 +55,32 @@
         <td>
             {{ $student->phone }}
         </td>
+        <td>
 
+    <a href="{{ route('students.edit', $student->id) }}">
+        Edit
+    </a>
+</td>
+<td>
+    <form
+        action="/students/{{ $student->id }}"
+        method="POST"
+        style="display:inline;"
+    >
+
+        @csrf
+        @method('DELETE')
+
+        <button
+    type="submit"
+    onclick="return confirm('Are you sure?')"
+>
+    Delete
+</button>
+
+    </form>
+
+</td>
     </tr>
 
     @endforeach

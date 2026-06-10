@@ -93,4 +93,58 @@ public function store(Request $request)
         ->with('success', 'Student Added Successfully');
 }
 
+public function edit(Student $student)
+{
+    $classes = SchoolClass::all();
+
+    $sections = Section::where(
+        'class_id',
+        $student->class_id
+    )->get();
+
+    return view(
+        'students.edit',
+        compact(
+            'student',
+            'classes',
+            'sections'
+        )
+    );
+}
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'class_id' => 'required',
+        'section_id' => 'required',
+        'name' => 'required',
+        'roll_no' => 'required'
+    ]);
+
+    $student = Student::findOrFail($id);
+
+    $student->update([
+        'class_id' => $request->class_id,
+        'section_id' => $request->section_id,
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'roll_no' => $request->roll_no,
+        'address' => $request->address
+    ]);
+
+    return redirect('/students')
+        ->with('success', 'Student Updated Successfully');
+}
+
+public function destroy($id)
+{
+    $student = Student::findOrFail($id);
+
+    $student->delete();
+
+    return redirect('/students')
+        ->with('success', 'Student Deleted Successfully');
+}
+
 }

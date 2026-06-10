@@ -62,3 +62,24 @@ Route::get('/students/create', [StudentController::class, 'create']);
 Route::post('/students', [StudentController::class, 'store']);
 
 Route::get('/students', [StudentController::class, 'index']);
+
+Route::get('/students/{student}/edit', [StudentController::class, 'edit'])
+    ->name('students.edit');
+Route::put('/students/{id}', [StudentController::class, 'update']);
+
+Route::delete('/students/{id}', [StudentController::class, 'destroy']);
+
+use App\Http\Controllers\StaffController;
+
+Route::get('/staff/create', [StaffController::class, 'create']);
+
+Route::post('/staff', [StaffController::class, 'store']);
+
+Route::get('/staff', [StaffController::class, 'index']);
+
+Route::get('/staff/{staff}/edit', [StaffController::class, 'edit'])
+    ->name('staff.edit');
+
+Route::put('/staff/{id}', [StaffController::class, 'update']);
+
+Route::delete('/staff/{id}', [StaffController::class, 'destroy']);    

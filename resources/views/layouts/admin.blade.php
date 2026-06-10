@@ -62,7 +62,7 @@
 
         <a href="/students">Students</a>
 
-        <a href="#">Staff</a>
+        <a href="/staff">Staff</a>
 
         <a href="#">Parents</a>
 
