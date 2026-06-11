@@ -1,15 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ParentDetailController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/staff', function () {
-    return "Staff Page";
+Route::get('/', function () {
+
+    if (Auth::check()) {
+        return redirect('/classes');
+    }
+
+    return redirect('/login');
+
 });
 
 Route::get('/fees', function () {
@@ -35,7 +37,8 @@ Route::get('/classes/create', [SchoolClassController::class, 'create']);
 
 Route::post('/classes', [SchoolClassController::class, 'store']);
 
-Route::get('/classes', [SchoolClassController::class, 'index']);
+Route::get('/classes', [SchoolClassController::class, 'index'])
+    ->middleware(['auth', 'admin']);
 
 Route::get('/classes/{id}/edit', [SchoolClassController::class, 'edit']);
 
@@ -92,3 +95,11 @@ Route::get('/parents/{id}/edit', [ParentDetailController::class, 'edit']);
 Route::put('/parents/{id}', [ParentDetailController::class, 'update']);
 
 Route::delete('/parents/{id}', [ParentDetailController::class, 'destroy']);
+
+Route::get('/user-dashboard', function () {
+
+    return "User Dashboard";
+
+})->middleware('auth');
+
+require __DIR__.'/auth.php';

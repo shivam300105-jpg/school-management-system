@@ -43,6 +43,20 @@
             padding:20px;
         }
 
+        .logout-btn{
+            width:100%;
+            border:none;
+            background:#34495e;
+            color:white;
+            text-align:left;
+            padding:12px 20px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        .logout-btn:hover{
+            background:#2c3e50;
+        }
     </style>
 
 </head>
@@ -66,6 +80,13 @@
 
         <a href="/parents">Parents</a>
 
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <button type="submit" class="logout-btn">
+                Logout
+            </button>
+        </form>
     </div>
 
     <div class="content">
