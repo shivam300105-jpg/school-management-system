@@ -64,7 +64,7 @@
 
         <a href="/staff">Staff</a>
 
-        <a href="#">Parents</a>
+        <a href="/parents">Parents</a>
 
     </div>
 

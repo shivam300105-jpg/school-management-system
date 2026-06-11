@@ -24,4 +24,9 @@ public function section()
 {
     return $this->belongsTo(Section::class, 'section_id');
 }
+
+public function parentDetail()
+{
+    return $this->hasOne(ParentDetail::class);
+}
 }

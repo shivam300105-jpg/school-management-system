@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ParentDetailController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -9,10 +10,6 @@ Route::get('/', function () {
 
 Route::get('/staff', function () {
     return "Staff Page";
-});
-
-Route::get('/parents', function () {
-    return "Parents Page";
 });
 
 Route::get('/fees', function () {
@@ -83,3 +80,15 @@ Route::get('/staff/{staff}/edit', [StaffController::class, 'edit'])
 Route::put('/staff/{id}', [StaffController::class, 'update']);
 
 Route::delete('/staff/{id}', [StaffController::class, 'destroy']);    
+
+Route::get('/parents/create', [ParentDetailController::class, 'create']);
+
+Route::post('/parents', [ParentDetailController::class, 'store']);
+
+Route::get('/parents', [ParentDetailController::class, 'index']);
+
+Route::get('/parents/{id}/edit', [ParentDetailController::class, 'edit']);
+
+Route::put('/parents/{id}', [ParentDetailController::class, 'update']);
+
+Route::delete('/parents/{id}', [ParentDetailController::class, 'destroy']);

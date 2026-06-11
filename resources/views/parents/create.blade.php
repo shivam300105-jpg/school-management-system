@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h2>Add Student</h2>
+<h2>Add Parent</h2>
 
 @if(session('success'))
     <p style="color:green;">
@@ -18,26 +18,22 @@
     </ul>
 @endif
 
-<form action="/students" method="POST">
-
+<form action="/parents" method="POST">
     @csrf
 
-    <label>Select Class</label>
-    <br><br>
+    <p>Select Class</p>
 
-<select name="class_id" id="class_id">
-
-    <option value="">Select Class</option>
-
-    @foreach($classes as $class)
-
-        <option value="{{ $class->id }}">
-            {{ $class->name }}
+    <select name="class_id" id="class_id">
+        <option value="">
+            Select Class
         </option>
 
-    @endforeach
-
-</select>
+        @foreach($classes as $class)
+            <option value="{{ $class->id }}">
+                {{ $class->name }}
+            </option>
+        @endforeach
+    </select>
 
     <br><br>
 
@@ -53,45 +49,46 @@
 
     <br><br>
 
-    <label>Student Name</label>
-    <br><br>
+    <p>Select Student</p>
 
-    <input type="text" name="name">
+<select name="student_id" id="student_id">
 
-    <br><br>
+    <option value="">
+        First Select Section
+    </option>
 
-    <label>Roll Number</label>
-    <br><br>
+</select>
 
-    <input type="text" name="roll_no">
+<br><br>
 
-    <br><br>
-
-    <label>Phone</label>
-    <br><br>
-
-    <input type="text" name="phone">
+    <p>Father Name</p>
+    <input type="text" name="father_name">
 
     <br><br>
 
-    <label>Email</label>
+    <p>Mother Name</p>
+    <input type="text" name="mother_name">
+
     <br><br>
 
+    <p>Email</p>
     <input type="email" name="email">
 
     <br><br>
 
-    <label>Address</label>
+    <p>Phone</p>
+    <input type="text" name="phone">
+
     <br><br>
 
+    <p>Address</p>
     <textarea name="address"></textarea>
 
     <br><br>
 
     <button type="submit">
-        Save Student
+        Save Parent
     </button>
-
 </form>
 
 <script>
@@ -123,5 +120,33 @@ document.getElementById('class_id')
 
 });
 
+document.getElementById('section_id')
+.addEventListener('change', function () {
+
+    let sectionId = this.value;
+
+    let studentDropdown =
+        document.getElementById('student_id');
+
+    studentDropdown.innerHTML =
+        '<option value="">Select Student</option>';
+
+    const students = @json($students);
+
+    students.forEach(function(student) {
+
+        if (student.section_id == sectionId) {
+
+            studentDropdown.innerHTML +=
+            `<option value="${student.id}">
+                ${student.name}
+            </option>`;
+        }
+
+    });
+
+});
+
 </script>
+
 @endsection
