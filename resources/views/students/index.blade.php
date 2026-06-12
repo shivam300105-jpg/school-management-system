@@ -1,90 +1,126 @@
-@extends('layouts.admin')
+<x-app-layout>
 
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Students
+        </h2>
+    </x-slot>
 
-<h2>All Students</h2>
+<div class="py-6">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-@if(session('success'))
-    <p style="color:green;">
-        {{ session('success') }}
-    </p>
-@endif
+        <div class="bg-white shadow-md rounded-lg p-6">
 
-<a href="/students/create">
-    Add Student
-</a>
+            <div class="flex justify-between items-center mb-6">
 
-<hr>
+                <h2 class="text-2xl font-bold text-gray-800">
+                    All Students
+                </h2>
 
-<table border="1" cellpadding="10">
+                <a href="/students/create"
+                   class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                    + Add Student
+                </a>
 
-    <tr>
-        <th>ID</th>
-        <th>Class</th>
-        <th>Section</th>
-        <th>Name</th>
-        <th>Roll No</th>
-        <th>Phone</th>
-        <th>Modification</th>
-        <th>Action</th>
+            </div>
 
-    </tr>
+            @if(session('success'))
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-    @foreach($students as $student)
+            <div class="overflow-x-auto">
 
-    <tr>
+                <table class="min-w-full border border-gray-200">
 
-        <td>{{ $student->id }}</td>
+                    <thead class="bg-gray-100">
 
-        <td>
-            {{ $student->schoolClass->name }}
-        </td>
+                        <tr>
+                            <th class="px-4 py-3 text-left">ID</th>
+                            <th class="px-4 py-3 text-left">Class</th>
+                            <th class="px-4 py-3 text-left">Section</th>
+                            <th class="px-4 py-3 text-left">Name</th>
+                            <th class="px-4 py-3 text-left">Roll No</th>
+                            <th class="px-4 py-3 text-left">Phone</th>
+                            <th class="px-4 py-3 text-left">Edit</th>
+                            <th class="px-4 py-3 text-left">Delete</th>
+                        </tr>
 
-        <td>
-            {{ $student->section->name }}
-        </td>
+                    </thead>
 
-        <td>
-            {{ $student->name }}
-        </td>
+                    <tbody>
 
-        <td>
-            {{ $student->roll_no }}
-        </td>
+                        @foreach($students as $student)
 
-        <td>
-            {{ $student->phone }}
-        </td>
-        <td>
+                        <tr class="border-t">
 
-    <a href="{{ route('students.edit', $student->id) }}">
-        Edit
-    </a>
-</td>
-<td>
-    <form
-        action="/students/{{ $student->id }}"
-        method="POST"
-        style="display:inline;"
-    >
+                            <td class="px-4 py-3">
+                                {{ $student->id }}
+                            </td>
 
-        @csrf
-        @method('DELETE')
+                            <td class="px-4 py-3">
+                                {{ $student->schoolClass->name }}
+                            </td>
 
-        <button
-    type="submit"
-    onclick="return confirm('Are you sure?')"
->
-    Delete
-</button>
+                            <td class="px-4 py-3">
+                                {{ $student->section->name }}
+                            </td>
 
-    </form>
+                            <td class="px-4 py-3">
+                                {{ $student->name }}
+                            </td>
 
-</td>
-    </tr>
+                            <td class="px-4 py-3">
+                                {{ $student->roll_no }}
+                            </td>
 
-    @endforeach
+                            <td class="px-4 py-3">
+                                {{ $student->phone }}
+                            </td>
 
-</table>
+                            <td class="px-4 py-3">
 
-@endsection
+                                <a href="{{ route('students.edit', $student->id) }}"
+                                   class="text-blue-600 hover:underline">
+                                    Edit
+                                </a>
+
+                            </td>
+
+                            <td class="px-4 py-3">
+
+                                <form
+                                    action="/students/{{ $student->id }}"
+                                    method="POST">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        onclick="return confirm('Are you sure?')"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                        @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</x-app-layout>

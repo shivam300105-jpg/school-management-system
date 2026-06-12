@@ -1,68 +1,121 @@
-@extends('layouts.admin')
+<x-app-layout>
 
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Edit Parent
+        </h2>
+    </x-slot>
 
-<h2>Edit Parent</h2>
+    <div class="py-6">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
-@if($errors->any())
-    <ul style="color:red;">
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
+            <div class="bg-white shadow-md rounded-lg p-6">
 
-<form action="/parents/{{ $parent->id }}" method="POST">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    Edit Parent
+                </h2>
 
-    @csrf
-    @method('PUT')
+                @if($errors->any())
+                    <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>• {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-    <p>Father Name</p>
-    <input
-        type="text"
-        name="father_name"
-        value="{{ $parent->father_name }}"
-    >
+                <form action="/parents/{{ $parent->id }}" method="POST">
 
-    <br><br>
+                    @csrf
+                    @method('PUT')
 
-    <p>Mother Name</p>
-    <input
-        type="text"
-        name="mother_name"
-        value="{{ $parent->mother_name }}"
-    >
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <br><br>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">
+                                Father Name
+                            </label>
 
-    <p>Email</p>
-    <input
-        type="email"
-        name="email"
-        value="{{ $parent->email }}"
-    >
+                            <input
+                                type="text"
+                                name="father_name"
+                                value="{{ $parent->father_name }}"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                            >
+                        </div>
 
-    <br><br>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">
+                                Mother Name
+                            </label>
 
-    <p>Phone</p>
-    <input
-        type="text"
-        name="phone"
-        value="{{ $parent->phone }}"
-    >
+                            <input
+                                type="text"
+                                name="mother_name"
+                                value="{{ $parent->mother_name }}"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                            >
+                        </div>
 
-    <br><br>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">
+                                Email
+                            </label>
 
-    <p>Address</p>
+                            <input
+                                type="email"
+                                name="email"
+                                value="{{ $parent->email }}"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                            >
+                        </div>
 
-    <textarea name="address">{{ $parent->address }}</textarea>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">
+                                Phone
+                            </label>
 
-    <br><br>
+                            <input
+                                type="text"
+                                name="phone"
+                                value="{{ $parent->phone }}"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                            >
+                        </div>
 
-    <button type="submit">
-        Update Parent
-    </button>
+                    </div>
 
-</form>
+                    <div class="mt-4">
 
-@endsection
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Address
+                        </label>
+
+                        <textarea
+                            name="address"
+                            rows="4"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >{{ $parent->address }}</textarea>
+
+                    </div>
+
+                    <div class="mt-6">
+
+                        <button
+                            type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+                        >
+                            Update Parent
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+</x-app-layout>

@@ -1,98 +1,160 @@
-@extends('layouts.admin')
+<x-app-layout>
 
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Add Student
+        </h2>
+    </x-slot>
 
-<h2>Add Student</h2>
+<div class="py-6">
+    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
-@if(session('success'))
-    <p style="color:green;">
-        {{ session('success') }}
-    </p>
-@endif
+        <div class="bg-white shadow-md rounded-lg p-6">
 
-@if($errors->any())
-    <ul style="color:red;">
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                Add Student
+            </h2>
 
-<form action="/students" method="POST">
+            @if(session('success'))
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-    @csrf
+            @if($errors->any())
+                <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>• {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-    <label>Select Class</label>
-    <br><br>
+            <form action="/students" method="POST">
 
-<select name="class_id" id="class_id">
+                @csrf
 
-    <option value="">Select Class</option>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    @foreach($classes as $class)
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Select Class
+                        </label>
 
-        <option value="{{ $class->id }}">
-            {{ $class->name }}
-        </option>
+                        <select
+                            name="class_id"
+                            id="class_id"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                            <option value="">Select Class</option>
 
-    @endforeach
+                            @foreach($classes as $class)
+                                <option value="{{ $class->id }}">
+                                    {{ $class->name }}
+                                </option>
+                            @endforeach
 
-</select>
+                        </select>
+                    </div>
 
-    <br><br>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Select Section
+                        </label>
 
-    <p>Select Section</p>
+                        <select
+                            name="section_id"
+                            id="section_id"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                            <option value="">
+                                First Select Class
+                            </option>
+                        </select>
+                    </div>
 
-    <select name="section_id" id="section_id">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Student Name
+                        </label>
 
-        <option value="">
-            First Select Class
-        </option>
+                        <input
+                            type="text"
+                            name="name"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                    </div>
 
-    </select>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Roll Number
+                        </label>
 
-    <br><br>
+                        <input
+                            type="text"
+                            name="roll_no"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                    </div>
 
-    <label>Student Name</label>
-    <br><br>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Phone
+                        </label>
 
-    <input type="text" name="name">
+                        <input
+                            type="text"
+                            name="phone"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                    </div>
 
-    <br><br>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Email
+                        </label>
 
-    <label>Roll Number</label>
-    <br><br>
+                        <input
+                            type="email"
+                            name="email"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                    </div>
 
-    <input type="text" name="roll_no">
+                </div>
 
-    <br><br>
+                <div class="mt-4">
 
-    <label>Phone</label>
-    <br><br>
+                    <label class="block text-gray-700 font-medium mb-2">
+                        Address
+                    </label>
 
-    <input type="text" name="phone">
+                    <textarea
+                        name="address"
+                        rows="4"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                    ></textarea>
 
-    <br><br>
+                </div>
 
-    <label>Email</label>
-    <br><br>
+                <div class="mt-6">
 
-    <input type="email" name="email">
+                    <button
+                        type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+                    >
+                        Save Student
+                    </button>
 
-    <br><br>
+                </div>
 
-    <label>Address</label>
-    <br><br>
+            </form>
 
-    <textarea name="address"></textarea>
+        </div>
 
-    <br><br>
-
-    <button type="submit">
-        Save Student
-    </button>
-
-</form>
+    </div>
+</div>
 
 <script>
 
@@ -124,4 +186,4 @@ document.getElementById('class_id')
 });
 
 </script>
-@endsection
+</x-app-layout>

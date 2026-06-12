@@ -1,30 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Class</title>
-</head>
-<body>
+<x-app-layout>
 
-<h2>Edit Class</h2>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Edit Class
+        </h2>
+    </x-slot>       
 
-<form action="/classes/{{ $class->id }}" method="POST">
+<div class="py-6">
+    <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
 
-    @csrf
-    @method('PUT')
+        <div class="bg-white shadow-md rounded-lg p-6">
 
-    <label>Class Name:</label>
+            <form action="/classes/{{ $class->id }}" method="POST">
 
-    <input
-        type="text"
-        name="name"
-        value="{{ $class->name }}"
-    >
+                @csrf
+                @method('PUT')
 
-    <button type="submit">
-        Update Class
-    </button>
+                <div class="mb-4">
 
-</form>
+                    <label class="block text-gray-700 font-medium mb-2">
+                        Class Name
+                    </label>
 
-</body>
-</html>
+                    <input
+                        type="text"
+                        name="name"
+                        value="{{ $class->name }}"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                    >
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
+                >
+                    Update Class
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+</x-app-layout>

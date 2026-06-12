@@ -1,76 +1,120 @@
-@extends('layouts.admin')
+<x-app-layout>
 
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Edit Staff
+        </h2>
+    </x-slot>
 
-<h2>Edit Staff</h2>
+    <div class="py-6">
+        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
-@if($errors->any())
-    <ul style="color:red;">
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
+            <div class="bg-white shadow-md rounded-lg p-6">
 
-<form action="/staff/{{ $staff->id }}" method="POST">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                    Edit Staff
+                </h2>
 
-    @csrf
-    @method('PUT')
+                @if($errors->any())
+                    <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>• {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-    <label>Name</label>
-    <br><br>
-    <input
-        type="text"
-        name="name"
-        value="{{ $staff->name }}"
-    >
+                <form action="/staff/{{ $staff->id }}" method="POST">
 
-    <br><br>
+                    @csrf
+                    @method('PUT')
 
-    <label>Email</label>
-    <br><br>
-    <input
-        type="email"
-        name="email"
-        value="{{ $staff->email }}"
-    >
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <br><br>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">
+                                Name
+                            </label>
 
-    <label>Phone</label>
-    <br><br>
-    <input
-        type="text"
-        name="phone"
-        value="{{ $staff->phone }}"
-    >
+                            <input
+                                type="text"
+                                name="name"
+                                value="{{ $staff->name }}"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                            >
+                        </div>
 
-    <br><br>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">
+                                Email
+                            </label>
 
-    <label>Designation</label>
-    <br><br>
-    <input
-        type="text"
-        name="designation"
-        value="{{ $staff->designation }}"
-    >
+                            <input
+                                type="email"
+                                name="email"
+                                value="{{ $staff->email }}"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                            >
+                        </div>
 
-    <br><br>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">
+                                Phone
+                            </label>
 
-    <label>Salary</label>
-    <br><br>
-    <input
-        type="text"
-        name="salary"
-        value="{{ $staff->salary }}"
-    >
+                            <input
+                                type="text"
+                                name="phone"
+                                value="{{ $staff->phone }}"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                            >
+                        </div>
 
-    <br><br>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">
+                                Designation
+                            </label>
 
-    <button type="submit">
-        Update Staff
-    </button>
+                            <input
+                                type="text"
+                                name="designation"
+                                value="{{ $staff->designation }}"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                            >
+                        </div>
 
-</form>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">
+                                Salary
+                            </label>
 
-@endsection
+                            <input
+                                type="text"
+                                name="salary"
+                                value="{{ $staff->salary }}"
+                                class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                            >
+                        </div>
+
+                    </div>
+
+                    <div class="mt-6">
+
+                        <button
+                            type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+                        >
+                            Update Staff
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+</x-app-layout>

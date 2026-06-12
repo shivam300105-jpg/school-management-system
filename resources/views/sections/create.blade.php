@@ -1,55 +1,91 @@
-@extends('layouts.admin')
+<x-app-layout>
 
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Add Section
+        </h2>
+    </x-slot>
 
-<h2>Add Section</h2>
+<div class="py-6">
+    <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
 
-@if(session('success'))
-    <p style="color:green;">
-        {{ session('success') }}
-    </p>
-@endif
+        <div class="bg-white shadow-md rounded-lg p-6">
 
-@if($errors->any())
-    <ul style="color:red;">
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                Add Section
+            </h2>
 
-<form action="/sections" method="POST">
+            @if(session('success'))
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-    @csrf
+            @if($errors->any())
+                <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>• {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-    <label>Select Class</label>
-    <br><br>
+            <form action="/sections" method="POST">
 
-    <select name="class_id">
+                @csrf
 
-        <option value="">Select Class</option>
+                <div class="mb-4">
 
-        @foreach($classes as $class)
-            <option value="{{ $class->id }}">
-                {{ $class->name }}
-            </option>
-        @endforeach
+                    <label class="block text-gray-700 font-medium mb-2">
+                        Select Class
+                    </label>
 
-    </select>
+                    <select
+                        name="class_id"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
 
-    <br><br>
+                        <option value="">
+                            Select Class
+                        </option>
 
-    <label>Section Name</label>
-    <br><br>
+                        @foreach($classes as $class)
+                            <option value="{{ $class->id }}">
+                                {{ $class->name }}
+                            </option>
+                        @endforeach
 
-    <input type="text" name="name">
+                    </select>
 
-    <br><br>
+                </div>
 
-    <button type="submit">
-        Save Section
-    </button>
+                <div class="mb-4">
 
-</form>
+                    <label class="block text-gray-700 font-medium mb-2">
+                        Section Name
+                    </label>
 
-@endsection
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter Section Name"
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
+                >
+                    Save Section
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+</x-app-layout>

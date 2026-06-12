@@ -65,7 +65,7 @@
 <div class="navbar">
     <h2>School Management System</h2>
 </div>
-
+<a href="/admin/dashboard">Dashboard</a>
 <div class="container">
 
     <div class="sidebar">

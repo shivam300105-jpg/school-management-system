@@ -1,67 +1,113 @@
-@extends('layouts.admin')
+<x-app-layout>
 
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Staff Management
+        </h2>
+    </x-slot>
 
-<h2>All Staff</h2>
+<div class="py-6">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-@if(session('success'))
-    <p style="color:green;">
-        {{ session('success') }}
-    </p>
-@endif
+        <div class="bg-white shadow-md rounded-lg p-6">
 
-<a href="/staff/create">
-    Add Staff
-</a>
+            <div class="flex justify-between items-center mb-6">
 
-<hr>
+                <h2 class="text-2xl font-bold text-gray-800">
+                    All Staff
+                </h2>
 
-<table border="1" cellpadding="10">
+                <a href="/staff/create"
+                   class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                    + Add Staff
+                </a>
 
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Designation</th>
-        <th>Salary</th>
-        <th>Modification</th>
-        <th>Action</th>
-    </tr>
+            </div>
 
-    @foreach($staff as $member)
+            @if(session('success'))
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-    <tr>
+            <div class="overflow-x-auto">
 
-        <td>{{ $member->id }}</td>
+                <table class="min-w-full border border-gray-200">
 
-        <td>{{ $member->name }}</td>
+                    <thead class="bg-gray-100">
 
-        <td>{{ $member->email }}</td>
+                        <tr>
+                            <th class="px-4 py-3 text-left">ID</th>
+                            <th class="px-4 py-3 text-left">Name</th>
+                            <th class="px-4 py-3 text-left">Email</th>
+                            <th class="px-4 py-3 text-left">Phone</th>
+                            <th class="px-4 py-3 text-left">Designation</th>
+                            <th class="px-4 py-3 text-left">Salary</th>
+                            <th class="px-4 py-3 text-left">Edit</th>
+                            <th class="px-4 py-3 text-left">Delete</th>
+                        </tr>
 
-        <td>{{ $member->phone }}</td>
+                    </thead>
 
-        <td>{{ $member->designation }}</td>
+                    <tbody>
 
-        <td>{{ $member->salary }}</td>
-        <td>
-            <a href="/staff/{{ $member->id }}/edit">
-                Edit
-            </a>
-        </td>
-        <td>
-            <form action="/staff/{{ $member->id }}" method="POST" style="display:inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" onclick="return confirm('Are you sure?')">
-                    Delete
-                </button>
-            </form>
-        </td>
-    </tr>
+                        @foreach($staff as $member)
 
-    @endforeach
+                        <tr class="border-t">
 
-</table>
+                            <td class="px-4 py-3">{{ $member->id }}</td>
 
-@endsection
+                            <td class="px-4 py-3">{{ $member->name }}</td>
+
+                            <td class="px-4 py-3">{{ $member->email }}</td>
+
+                            <td class="px-4 py-3">{{ $member->phone }}</td>
+
+                            <td class="px-4 py-3">{{ $member->designation }}</td>
+
+                            <td class="px-4 py-3">₹{{ $member->salary }}</td>
+
+                            <td class="px-4 py-3">
+
+                                <a href="/staff/{{ $member->id }}/edit"
+                                   class="text-blue-600 hover:underline">
+                                    Edit
+                                </a>
+
+                            </td>
+
+                            <td class="px-4 py-3">
+
+                                <form
+                                    action="/staff/{{ $member->id }}"
+                                    method="POST">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        onclick="return confirm('Are you sure?')"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                        @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+</x-app-layout>

@@ -1,56 +1,119 @@
-@extends('layouts.admin')
+<x-app-layout>
 
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Add Staff
+        </h2>
+    </x-slot>
 
-<h2>Add Staff</h2>
+<div class="py-6">
+    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
-@if(session('success'))
-    <p style="color:green;">
-        {{ session('success') }}
-    </p>
-@endif
+        <div class="bg-white shadow-md rounded-lg p-6">
 
-@if($errors->any())
-    <ul style="color:red;">
-        @foreach($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                Add Staff
+            </h2>
 
-<form action="/staff" method="POST">
+            @if(session('success'))
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-    @csrf
+            @if($errors->any())
+                <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>• {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-    <label>Name</label>
-    <br><br>
-    <input type="text" name="name">
-    <br><br>
+            <form action="/staff" method="POST">
 
-    <label>Email</label>
-    <br><br>
-    <input type="email" name="email">
-    <br><br>
+                @csrf
 
-    <label>Phone</label>
-    <br><br>
-    <input type="text" name="phone">
-    <br><br>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <label>Designation</label>
-    <br><br>
-    <input type="text" name="designation">
-    <br><br>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Name
+                        </label>
 
-    <label>Salary</label>
-    <br><br>
-    <input type="text" name="salary">
-    <br><br>
+                        <input
+                            type="text"
+                            name="name"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                    </div>
 
-    <button type="submit">
-        Save Staff
-    </button>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Email
+                        </label>
 
-</form>
+                        <input
+                            type="email"
+                            name="email"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                    </div>
 
-@endsection
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Phone
+                        </label>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Designation
+                        </label>
+
+                        <input
+                            type="text"
+                            name="designation"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">
+                            Salary
+                        </label>
+
+                        <input
+                            type="text"
+                            name="salary"
+                            class="w-full border border-gray-300 rounded-lg px-4 py-2"
+                        >
+                    </div>
+
+                </div>
+
+                <div class="mt-6">
+
+                    <button
+                        type="submit"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+                    >
+                        Save Staff
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+</x-app-layout>

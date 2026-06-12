@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ParentDetailController;
-
+use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/', function () {
 
@@ -116,6 +116,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/parents/{id}', [ParentDetailController::class, 'update']);
 
     Route::delete('/parents/{id}', [ParentDetailController::class, 'destroy']);
+
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])
+        ->name('admin.dashboard');
 
 });
 

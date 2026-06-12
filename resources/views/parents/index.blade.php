@@ -1,77 +1,125 @@
-@extends('layouts.admin')
+<x-app-layout>
 
-@section('content')
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            Parents Management
+        </h2>
+    </x-slot>
 
-<h2>Parents List</h2>
+<div class="py-6">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-<a href="/parents/create">
-    Add Parent
-</a>
+        <div class="bg-white shadow-md rounded-lg p-6">
 
-<br><br>
+            <div class="flex justify-between items-center mb-6">
 
-<table border="1" cellpadding="10">
+                <h2 class="text-2xl font-bold text-gray-800">
+                    All Parents
+                </h2>
 
-<tr>
-    <th>Student</th>
-    <th>Class</th>
-    <th>Section</th>
-    <th>Father Name</th>
-    <th>Mother Name</th>
-    <th>Phone</th>
-    <th>Modification</th>  
-    <th>Action</th>
-</tr>   
+                <a href="/parents/create"
+                   class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                    + Add Parent
+                </a>
 
-    @foreach($parents as $parent)
+            </div>
 
-        <tr>
+            @if(session('success'))
+                <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-<td>
-    {{ $parent->student->name ?? 'N/A' }}
-</td>
+            <div class="overflow-x-auto">
 
-<td>
-    {{ $parent->student->schoolClass->name ?? 'N/A' }}
-</td>
+                <table class="min-w-full border border-gray-200">
 
-<td>
-    {{ $parent->student->section->name ?? 'N/A' }}
-</td>
+                    <thead class="bg-gray-100">
 
-<td>
-    {{ $parent->father_name }}
-</td>
+                        <tr>
+                            <th class="px-4 py-3 text-left">Student</th>
+                            <th class="px-4 py-3 text-left">Class</th>
+                            <th class="px-4 py-3 text-left">Section</th>
+                            <th class="px-4 py-3 text-left">Father Name</th>
+                            <th class="px-4 py-3 text-left">Mother Name</th>
+                            <th class="px-4 py-3 text-left">Phone</th>
+                            <th class="px-4 py-3 text-left">Edit</th>
+                            <th class="px-4 py-3 text-left">Delete</th>
+                        </tr>
 
-<td>
-    {{ $parent->mother_name }}
-</td>
+                    </thead>
 
-<td>
-    {{ $parent->phone }}
-</td>
+                    <tbody>
 
-<td>
+                        @foreach($parents as $parent)
 
-    <a href="/parents/{{ $parent->id }}/edit">
-        Edit
-    </a>
-</td>
+                        <tr class="border-t">
 
-<td>
-    <form action="/parents/{{ $parent->id }}" method="POST" style="display:inline;">
-        @csrf
-        @method('DELETE')
-        <button type="submit" onclick="return confirm('Are you sure you want to delete this parent?')">
-            Delete
-        </button>
-    </form>
-</td>
+                            <td class="px-4 py-3">
+                                {{ $parent->student->name ?? 'N/A' }}
+                            </td>
 
-</tr>
+                            <td class="px-4 py-3">
+                                {{ $parent->student->schoolClass->name ?? 'N/A' }}
+                            </td>
 
-    @endforeach
+                            <td class="px-4 py-3">
+                                {{ $parent->student->section->name ?? 'N/A' }}
+                            </td>
 
-</table>
+                            <td class="px-4 py-3">
+                                {{ $parent->father_name }}
+                            </td>
 
-@endsection
+                            <td class="px-4 py-3">
+                                {{ $parent->mother_name }}
+                            </td>
+
+                            <td class="px-4 py-3">
+                                {{ $parent->phone }}
+                            </td>
+
+                            <td class="px-4 py-3">
+
+                                <a href="/parents/{{ $parent->id }}/edit"
+                                   class="text-blue-600 hover:underline">
+                                    Edit
+                                </a>
+
+                            </td>
+
+                            <td class="px-4 py-3">
+
+                                <form action="/parents/{{ $parent->id }}"
+                                      method="POST">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        type="submit"
+                                        onclick="return confirm('Are you sure you want to delete this parent?')"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+                                        Delete
+                                    </button>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+
+                        @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</x-app-layout>
