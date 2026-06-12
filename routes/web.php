@@ -4,6 +4,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ParentDetailController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\FeeController;
+use App\Http\Controllers\LeaveController;
 
 Route::get('/', function () {
 
@@ -134,6 +135,23 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
 
+    Route::get('/leaves/create', [LeaveController::class, 'create']);
+
+    Route::post('/leaves', [LeaveController::class, 'store']);
+
+    Route::get('/leaves', [LeaveController::class, 'index']);
+
+    Route::get('/leaves/{leave}/edit', [LeaveController::class, 'edit'])
+        ->name('leaves.edit');
+
+    Route::put('/leaves/{id}', [LeaveController::class, 'update']);
+
+    Route::delete('/leaves/{id}', [LeaveController::class, 'destroy']);
+
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])
         ->name('admin.dashboard');
 
@@ -142,6 +160,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::get('/user-dashboard', function () {
 
     return view('user-dashboard');
+
+})->middleware('auth');
+
+Route::get('/student/dashboard', function () {
+    return view('student.dashboard');
+})->middleware('auth');
+
+Route::get('/user/profile', function () {
+
+    return view('user-profile');
 
 })->middleware('auth');
 

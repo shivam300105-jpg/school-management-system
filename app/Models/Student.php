@@ -34,4 +34,9 @@ public function fees()
 {
     return $this->hasMany(Fee::class);
 }
+
+public function leaves()
+{
+    return $this->hasMany(Leave::class);
+}
 }
