@@ -37,6 +37,9 @@
         Parents
     </x-nav-link>
 
+    <x-nav-link :href="url('/fees')">
+        Fees
+    </x-nav-link>
 </div>
             </div>
 
@@ -111,6 +114,10 @@
 
 <x-responsive-nav-link :href="url('/parents')">
     Parents
+</x-responsive-nav-link>
+
+<x-responsive-nav-link :href="url('/fees')">
+    Fees
 </x-responsive-nav-link>
         </div>
 

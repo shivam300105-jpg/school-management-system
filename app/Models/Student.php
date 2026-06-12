@@ -29,4 +29,9 @@ public function parentDetail()
 {
     return $this->hasOne(ParentDetail::class);
 }
+
+public function fees()
+{
+    return $this->hasMany(Fee::class);
+}
 }

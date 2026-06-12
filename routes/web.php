@@ -3,6 +3,7 @@
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ParentDetailController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\FeeController;
 
 Route::get('/', function () {
 
@@ -12,10 +13,6 @@ Route::get('/', function () {
 
     return redirect('/login');
 
-});
-
-Route::get('/fees', function () {
-    return "Fees Page";
 });
 
 Route::get('/student/{name}', [StudentController::class, 'show']);
@@ -116,6 +113,22 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/parents/{id}', [ParentDetailController::class, 'update']);
 
     Route::delete('/parents/{id}', [ParentDetailController::class, 'destroy']);
+
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('/fees/create', [FeeController::class, 'create']);
+
+    Route::post('/fees', [FeeController::class, 'store']);
+
+    Route::get('/fees', [FeeController::class, 'index']);
+
+    Route::get('/fees/{id}/edit', [FeeController::class, 'edit']);
+
+    Route::put('/fees/{id}', [FeeController::class, 'update']);
+
+    Route::delete('/fees/{id}', [FeeController::class, 'destroy']);
 
 });
 

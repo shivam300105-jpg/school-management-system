@@ -10,7 +10,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             <!-- Statistics Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
 
                 <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-lg rounded-xl p-6">
                     <h3 class="text-sm uppercase tracking-wide">
@@ -82,6 +82,25 @@
                     </p>
                 </div>
 
+                <div class="bg-gradient-to-r from-indigo-500 to-indigo-700 text-white shadow-lg rounded-xl p-6">
+    <h3 class="text-sm uppercase tracking-wide">
+        Fee Records
+    </h3>
+
+
+<p class="text-4xl font-bold mt-2">
+    {{ $totalFees }}
+</p>
+
+<p class="text-sm mt-2">
+    Total Fee Entries
+</p>
+
+
+</div>
+
+
+
             </div>
 
             <!-- School Overview -->
@@ -146,7 +165,18 @@
                         </p>
 
                     </a>
+                    <a href="/fees/create"
+   class="bg-indigo-600 text-white p-6 rounded-xl shadow-lg hover:bg-indigo-700 transition">
 
+    <h4 class="font-bold text-lg">
+        Add Fee
+    </h4>
+
+    <p class="text-sm mt-2">
+        Create a new student fee record.
+    </p>
+
+</a>
                 </div>
 
             </div>

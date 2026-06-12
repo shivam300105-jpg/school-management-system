@@ -8,6 +8,8 @@ use App\Models\Staff;
 use App\Models\Section;
 use App\Models\SchoolClass;
 use App\Models\ParentDetail;
+use App\Models\Fee;
+
 
 class DashboardController extends Controller
 {
@@ -19,12 +21,15 @@ public function index()
     $totalStaff = Staff::count();
     $totalParents = ParentDetail::count();
 
-    return view('admin.dashboard', compact(
-        'totalClasses',
-        'totalSections',
-        'totalStudents',
-        'totalStaff',
-        'totalParents'
-    ));
+    $totalFees = Fee::count();
+
+return view('admin.dashboard', compact(
+    'totalClasses',
+    'totalSections',
+    'totalStudents',
+    'totalStaff',
+    'totalParents',
+    'totalFees'
+));
 }
 }
