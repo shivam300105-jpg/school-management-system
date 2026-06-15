@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SchoolClass;
 use App\Models\Section;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Student;
 
 class StudentController extends Controller
@@ -72,22 +73,32 @@ return view('students.create', compact('classes'));}
 
 public function store(Request $request)
 {
-    $request->validate([
-        'class_id' => 'required',
-        'section_id' => 'required',
-        'name' => 'required',
-        'roll_no' => 'required'
-    ]);
+$request->validate([
+    'class_id' => 'required',
+    'section_id' => 'required',
+    'name' => 'required',
+    'roll_no' => 'required',
+    'email' => 'required|email|unique:users,email',
+    'password' => 'required|min:6'
+]);
 
-    Student::create([
-        'class_id' => $request->class_id,
-        'section_id' => $request->section_id,
-        'name' => $request->name,
-        'email' => $request->email,
-        'phone' => $request->phone,
-        'roll_no' => $request->roll_no,
-        'address' => $request->address
-    ]);
+$user = User::create([
+    'name' => $request->name,
+    'email' => $request->email,
+    'password' => Hash::make($request->password),
+    'role' => 'student'
+]);
+
+Student::create([
+    'user_id' => $user->id,
+    'class_id' => $request->class_id,
+    'section_id' => $request->section_id,
+    'name' => $request->name,
+    'email' => $request->email,
+    'phone' => $request->phone,
+    'roll_no' => $request->roll_no,
+    'address' => $request->address
+]);
 
     return redirect('/students/create')
         ->with('success', 'Student Added Successfully');

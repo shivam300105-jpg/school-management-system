@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\SchoolClass;
 use App\Models\Section;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class ParentDetailController extends Controller
 {
@@ -46,20 +48,29 @@ public function create()
      */
 public function store(Request $request)
 {
-    $request->validate([
-        'student_id' => 'required',
-        'father_name' => 'required',
-        'phone' => 'required'
-    ]);
+$request->validate([
+    'student_id' => 'required',
+    'father_name' => 'required',
+    'phone' => 'required',
+    'email' => 'required|email|unique:users,email',
+    'password' => 'required|min:6'
+]);
+$user = User::create([
+    'name' => $request->father_name,
+    'email' => $request->email,
+    'password' => Hash::make($request->password),
+    'role' => 'parent'
+]);
 
-    ParentDetail::create([
-        'student_id' => $request->student_id,
-        'father_name' => $request->father_name,
-        'mother_name' => $request->mother_name,
-        'email' => $request->email,
-        'phone' => $request->phone,
-        'address' => $request->address
-    ]);
+ParentDetail::create([
+    'user_id' => $user->id,
+    'student_id' => $request->student_id,
+    'father_name' => $request->father_name,
+    'mother_name' => $request->mother_name,
+    'email' => $request->email,
+    'phone' => $request->phone,
+    'address' => $request->address
+]);
 
     return redirect('/parents/create')
         ->with('success', 'Parent Added Successfully');

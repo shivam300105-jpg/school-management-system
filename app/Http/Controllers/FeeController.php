@@ -117,25 +117,42 @@ public function destroy($id)
 
 public function myFees()
 {
-    $student = Student::where(
-        'email',
-        auth()->user()->email
-    )->first();
+    if (auth()->user()->role == 'student') {
 
-    if (!$student) {
-        return view('fees.my-fees', [
-            'fees' => collect()
-        ]);
+        $student = Student::where(
+            'email',
+            auth()->user()->email
+        )->first();
+
+        $fees = Fee::where(
+            'student_id',
+            $student->id
+        )->latest()->get();
+
+        return view(
+            'fees.my-fees',
+            compact('fees')
+        );
     }
 
-    $fees = Fee::where(
-        'student_id',
-        $student->id
-    )->latest()->get();
+    if (auth()->user()->role == 'parent') {
 
-    return view(
-        'fees.my-fees',
-        compact('fees')
-    );
+        $parent = \App\Models\ParentDetail::where(
+            'user_id',
+            auth()->id()
+        )->first();
+
+        $fees = Fee::where(
+            'student_id',
+            $parent->student_id
+        )->latest()->get();
+
+        return view(
+            'fees.my-fees',
+            compact('fees')
+        );
+    }
+
+    return abort(403);
 }
 }

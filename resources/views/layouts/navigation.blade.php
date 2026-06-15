@@ -5,9 +5,25 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('admin.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
+@if(auth()->user()->role == 'admin')
+    <a href="{{ route('admin.dashboard') }}">
+@endif
+
+@if(auth()->user()->role == 'student')
+    <a href="/student/dashboard">
+@endif
+
+@if(auth()->user()->role == 'staff')
+    <a href="/staff/dashboard">
+@endif
+
+@if(auth()->user()->role == 'parent')
+    <a href="/parent/dashboard">
+@endif
+
+    <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+
+</a>
                 </div>
 
                 <!-- Navigation Links -->
@@ -91,10 +107,14 @@
 </div>
     @endif
 
-    @if(auth()->user()->role == 'user')
+    @if(auth()->user()->role == 'student')
 
-<x-nav-link href="/user-dashboard">
+<x-nav-link href="/student/dashboard">
     Dashboard
+</x-nav-link>
+
+<x-nav-link href="/user/profile">
+    My Profile
 </x-nav-link>
 
 <x-nav-link href="/my-leaves">
@@ -104,6 +124,50 @@
 <x-nav-link href="/my-fees">
     My Fees
 </x-nav-link>
+@endif
+
+@if(auth()->user()->role == 'staff')
+
+<x-nav-link href="/staff/dashboard">
+    Dashboard
+</x-nav-link>
+
+<x-nav-link href="/user/profile">
+    My Profile
+</x-nav-link>
+
+@endif
+
+
+@if(auth()->user()->role == 'parent')
+
+<x-nav-link href="/parent/dashboard">
+    Dashboard
+</x-nav-link>
+
+<x-nav-link
+    :href="url('/my-fees')"
+    :active="request()->is('my-fees')"
+>
+    Fees
+</x-nav-link>
+
+<x-nav-link
+    :href="url('/parent/leaves')"
+    :active="request()->is('parent/leaves')"
+>
+    Leaves
+</x-nav-link>
+
+<x-nav-link
+    :href="url('/parent/profile')"
+    :active="request()->is('parent/profile')"
+>
+    My Profile
+</x-nav-link>
+
+
+
 @endif
 </div>  
 
@@ -208,15 +272,49 @@
 
 @endif
 
-@if(auth()->user()->role == 'user')
+@if(auth()->user()->role == 'student')
 
-    <x-responsive-nav-link href="/user-dashboard">
+    <x-responsive-nav-link href="/student/dashboard">
         Dashboard
+    </x-responsive-nav-link>
+
+    <x-responsive-nav-link href="/user/profile">
+        My Profile
     </x-responsive-nav-link>
 
     <x-responsive-nav-link href="/my-leaves">
         My Leaves
     </x-responsive-nav-link>
+
+    <x-responsive-nav-link href="/my-fees">
+        My Fees
+    </x-responsive-nav-link>
+
+@endif
+
+
+@if(auth()->user()->role == 'staff')
+
+<x-responsive-nav-link href="/staff/dashboard">
+    Dashboard
+</x-responsive-nav-link>
+
+<x-responsive-nav-link href="/user/profile">
+    My Profile
+</x-responsive-nav-link>
+
+@endif
+
+
+@if(auth()->user()->role == 'parent')
+
+<x-responsive-nav-link href="/parent/dashboard">
+    Dashboard
+</x-responsive-nav-link>
+
+<x-responsive-nav-link href="/user/profile">
+    My Profile
+</x-responsive-nav-link>
 
 @endif
 

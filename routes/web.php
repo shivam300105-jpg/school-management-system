@@ -15,12 +15,76 @@ Route::get('/', function () {
             return redirect('/admin/dashboard');
         }
 
-        return redirect('/user-dashboard');
+        if (auth()->user()->role == 'student') {
+            return redirect('/student/dashboard');
+        }
+
+        if (auth()->user()->role == 'staff') {
+            return redirect('/staff/dashboard');
+        }
+
+        if (auth()->user()->role == 'parent') {
+            return redirect('/parent/dashboard');
+        }
     }
 
     return redirect('/login');
-
 });
+Route::get('/student/dashboard', function () {
+    return view('user-dashboard');
+})->middleware(['auth', 'role:student']);
+
+Route::get('/staff/dashboard', function () {
+    return view('staff.dashboard');
+})->middleware(['auth', 'role:staff']);
+
+
+Route::get('/parent/dashboard', function () {
+
+    $parent = \App\Models\ParentDetail::where(
+        'user_id',
+        auth()->id()
+    )->first();
+
+    $student = $parent->student;
+
+    return view(
+        'parents.dashboard',
+        compact(
+            'parent',
+            'student'
+        )
+    );
+
+})->middleware(['auth', 'role:parent']);
+
+Route::get('/parent/leaves', function () {
+
+    $parent = \App\Models\ParentDetail::where(
+        'user_id',
+        auth()->id()
+    )->first();
+
+    if (!$parent || !$parent->student) {
+        $leaves = collect();
+    } else {
+
+        $studentUserId =
+            $parent->student->user_id;
+
+        $leaves =
+            \App\Models\Leave::where(
+                'user_id',
+                $studentUserId
+            )->latest()->get();
+    }
+
+    return view(
+        'parents.leaves',
+        compact('leaves')
+    );
+
+})->middleware(['auth', 'role:parent']);
 
 Route::get('/student/{name}', [StudentController::class, 'show']);
 
@@ -37,7 +101,7 @@ Route::get('/students-list', [StudentController::class, 'list']);
 
 use App\Http\Controllers\SchoolClassController;
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/classes/create', [SchoolClassController::class, 'create']);
 
@@ -55,7 +119,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 use App\Http\Controllers\SectionController;
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/sections/create', [SectionController::class, 'create']);
 
@@ -71,7 +135,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/students/create', [StudentController::class, 'create']);
 
@@ -90,7 +154,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 use App\Http\Controllers\StaffController;
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/staff/create', [StaffController::class, 'create']);
 
@@ -107,7 +171,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 }); 
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/parents/create', [ParentDetailController::class, 'create']);
 
@@ -123,7 +187,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/fees/create', [FeeController::class, 'create']);
 
@@ -142,7 +206,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::get('/my-fees', [FeeController::class, 'myFees'])
     ->middleware('auth');
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/leaves', [LeaveController::class, 'index']);
 
@@ -182,7 +246,7 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/reports/students',
         [ReportController::class, 'students']);
@@ -195,21 +259,36 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'admin'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])
         ->name('admin.dashboard');
 
 });
 
+Route::get('/parent/profile', function () {
+
+    $parent = \App\Models\ParentDetail::where(
+        'user_id',
+        auth()->id()
+    )->first();
+
+    return view(
+        'parents.profile',
+        compact('parent')
+    );
+
+})->middleware(['auth', 'role:parent']);
+
+
+Route::get('/role-test', function () {
+    return 'Role Middleware Working';
+})->middleware(['auth', 'role:student']);
+
 Route::get('/user-dashboard', function () {
 
     return view('user-dashboard');
 
-})->middleware('auth');
-
-Route::get('/student/dashboard', function () {
-    return view('student.dashboard');
 })->middleware('auth');
 
 Route::get('/user/profile', function () {
