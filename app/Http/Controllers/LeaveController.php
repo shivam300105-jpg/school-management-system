@@ -44,6 +44,43 @@ class LeaveController extends Controller
             ->with('success', 'Leave Applied Successfully');
     }
 
+    public function myLeaves()
+{
+    $leaves = Leave::where(
+        'user_id',
+        auth()->id()
+    )->latest()->get();
+
+    return view(
+        'leaves.my-leaves',
+        compact('leaves')
+    );
+}
+public function approve($id)
+{
+    $leave = Leave::findOrFail($id);
+
+    $leave->update([
+        'status' => 'Approved'
+    ]);
+
+    return back()
+        ->with('success',
+            'Leave Approved');
+}
+
+public function reject($id)
+{
+    $leave = Leave::findOrFail($id);
+
+    $leave->update([
+        'status' => 'Rejected'
+    ]);
+
+    return back()
+        ->with('success',
+            'Leave Rejected');
+}
     public function show(Leave $leave)
     {
         //

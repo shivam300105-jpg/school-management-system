@@ -12,7 +12,7 @@
 
                 <!-- Navigation Links -->
 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-
+@if(auth()->user()->role == 'admin')
     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
         Dashboard
     </x-nav-link>
@@ -40,7 +40,73 @@
     <x-nav-link :href="url('/fees')">
         Fees
     </x-nav-link>
+
+    <x-nav-link :href="url('/leaves')">
+        Leave Requests
+    </x-nav-link>
+
+    <div class="relative inline-block group">
+
+    <button
+        class="inline-flex items-center h-full text-sm font-medium text-gray-500 hover:text-gray-700">
+
+        Reports
+
+        <svg
+            class="ml-1 h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"/>
+
+        </svg>
+
+    </button>
+
+    <div
+        class="absolute left-0 hidden group-hover:block bg-white shadow-lg rounded-md w-48 z-50">
+
+        <a href="/reports/students"
+           class="block px-4 py-2 hover:bg-gray-100">
+            Student Report
+        </a>
+
+        <a href="/reports/fees"
+           class="block px-4 py-2 hover:bg-gray-100">
+            Fees Report
+        </a>
+
+        <a href="/reports/leaves"
+           class="block px-4 py-2 hover:bg-gray-100">
+            Leave Report
+        </a>
+
+    </div>
+
 </div>
+    @endif
+
+    @if(auth()->user()->role == 'user')
+
+<x-nav-link href="/user-dashboard">
+    Dashboard
+</x-nav-link>
+
+<x-nav-link href="/my-leaves">
+    My Leaves
+</x-nav-link>
+
+<x-nav-link href="/my-fees">
+    My Fees
+</x-nav-link>
+@endif
+</div>  
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -93,33 +159,68 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="url('/classes')">
-    Classes
-</x-responsive-nav-link>
 
-<x-responsive-nav-link :href="url('/sections')">
-    Sections
-</x-responsive-nav-link>
+@if(auth()->user()->role == 'admin')
 
-<x-responsive-nav-link :href="url('/students')">
-    Students
-</x-responsive-nav-link>
+    <x-responsive-nav-link :href="route('admin.dashboard')">
+        Dashboard
+    </x-responsive-nav-link>
 
-<x-responsive-nav-link :href="url('/staff')">
-    Staff
-</x-responsive-nav-link>
+    <x-responsive-nav-link :href="url('/classes')">
+        Classes
+    </x-responsive-nav-link>
 
-<x-responsive-nav-link :href="url('/parents')">
-    Parents
-</x-responsive-nav-link>
+    <x-responsive-nav-link :href="url('/sections')">
+        Sections
+    </x-responsive-nav-link>
 
-<x-responsive-nav-link :href="url('/fees')">
-    Fees
-</x-responsive-nav-link>
-        </div>
+    <x-responsive-nav-link :href="url('/students')">
+        Students
+    </x-responsive-nav-link>
+
+    <x-responsive-nav-link :href="url('/staff')">
+        Staff
+    </x-responsive-nav-link>
+
+    <x-responsive-nav-link :href="url('/parents')">
+        Parents
+    </x-responsive-nav-link>
+
+    <x-responsive-nav-link :href="url('/fees')">
+        Fees
+    </x-responsive-nav-link>
+
+    <x-responsive-nav-link :href="url('/leaves')">
+        Leave Requests
+    </x-responsive-nav-link>
+
+    <x-responsive-nav-link :href="url('/reports/students')">
+        Student Report
+    </x-responsive-nav-link>
+
+    <x-responsive-nav-link :href="url('/reports/fees')">
+        Fees Report
+    </x-responsive-nav-link>
+
+    <x-responsive-nav-link :href="url('/reports/leaves')">
+        Leave Report
+    </x-responsive-nav-link>
+
+@endif
+
+@if(auth()->user()->role == 'user')
+
+    <x-responsive-nav-link href="/user-dashboard">
+        Dashboard
+    </x-responsive-nav-link>
+
+    <x-responsive-nav-link href="/my-leaves">
+        My Leaves
+    </x-responsive-nav-link>
+
+@endif
+
+</div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

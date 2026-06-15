@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\SchoolClass;
 use App\Models\Section;
 
+
 class FeeController extends Controller
 {
     /**
@@ -47,7 +48,6 @@ public function store(Request $request)
     $request->validate([
         'student_id' => 'required|exists:students,id',
         'amount' => 'required|numeric',
-        'month' => 'required',
         'status' => 'required',
         'payment_date' => 'nullable|date',
     ]);
@@ -85,7 +85,6 @@ public function update(Request $request, $id)
 {
     $request->validate([
         'amount' => 'required|numeric',
-        'month' => 'required',
         'status' => 'required',
         'payment_date' => 'nullable|date',
     ]);
@@ -114,5 +113,29 @@ public function destroy($id)
 
     return redirect('/fees')
         ->with('success', 'Fee Deleted Successfully');
+}
+
+public function myFees()
+{
+    $student = Student::where(
+        'email',
+        auth()->user()->email
+    )->first();
+
+    if (!$student) {
+        return view('fees.my-fees', [
+            'fees' => collect()
+        ]);
+    }
+
+    $fees = Fee::where(
+        'student_id',
+        $student->id
+    )->latest()->get();
+
+    return view(
+        'fees.my-fees',
+        compact('fees')
+    );
 }
 }

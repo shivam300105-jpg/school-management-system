@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $fillable = [
+        'user_id',
         'class_id',
         'section_id',
         'name',
@@ -38,5 +39,10 @@ public function fees()
 public function leaves()
 {
     return $this->hasMany(Leave::class);
+}
+
+public function user()
+{
+    return $this->belongsTo(User::class);
 }
 }

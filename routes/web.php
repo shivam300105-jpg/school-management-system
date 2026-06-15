@@ -5,11 +5,17 @@ use App\Http\Controllers\ParentDetailController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\LeaveController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
 
     if (Auth::check()) {
-        return redirect('/classes');
+
+        if (auth()->user()->role == 'admin') {
+            return redirect('/admin/dashboard');
+        }
+
+        return redirect('/user-dashboard');
     }
 
     return redirect('/login');
@@ -133,11 +139,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 });
 
+Route::get('/my-fees', [FeeController::class, 'myFees'])
+    ->middleware('auth');
+
 Route::middleware(['auth', 'admin'])->group(function () {
-
-    Route::get('/leaves/create', [LeaveController::class, 'create']);
-
-    Route::post('/leaves', [LeaveController::class, 'store']);
 
     Route::get('/leaves', [LeaveController::class, 'index']);
 
@@ -147,6 +152,46 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/leaves/{id}', [LeaveController::class, 'update']);
 
     Route::delete('/leaves/{id}', [LeaveController::class, 'destroy']);
+
+    Route::put(
+    '/leaves/{id}/approve',
+    [LeaveController::class, 'approve']
+);
+
+Route::put(
+    '/leaves/{id}/reject',
+    [LeaveController::class, 'reject']
+);
+
+});
+
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/leaves/create', [LeaveController::class, 'create'])
+        ->name('leaves.create');
+
+    Route::post('/leaves', [LeaveController::class, 'store'])
+        ->name('leaves.store');
+
+});
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('/my-leaves',
+        [LeaveController::class, 'myLeaves'])
+        ->name('my-leaves');
+
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('/reports/students',
+        [ReportController::class, 'students']);
+
+    Route::get('/reports/fees',
+        [ReportController::class, 'fees']);
+
+    Route::get('/reports/leaves',
+        [ReportController::class, 'leaves']);
 
 });
 

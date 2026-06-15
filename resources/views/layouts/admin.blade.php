@@ -80,6 +80,8 @@
 
         <a href="/parents">Parents</a>
 
+        <a href="/leaves">Leaves</a>
+
         <form method="POST" action="{{ route('logout') }}">
             @csrf
 
