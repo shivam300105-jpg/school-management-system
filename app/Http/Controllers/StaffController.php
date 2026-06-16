@@ -38,6 +38,8 @@ public function store(Request $request)
         'role' => 'staff'
     ]);
 
+    $user->assignRole('Staff');
+    
     Staff::create([
         'user_id' => $user->id,
         'name' => $request->name,

@@ -7,6 +7,7 @@ use App\Http\Controllers\FeeController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\RolePermissionController;
 
 Route::get('/', function () {
 
@@ -107,7 +108,11 @@ Route::get('/students-list', [StudentController::class, 'list']);
 
 use App\Http\Controllers\SchoolClassController;
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware([
+    'auth',
+    // 'role:admin',
+    'permission:manage_classes'
+])->group(function () {
 
     Route::get('/classes/create', [SchoolClassController::class, 'create']);
 
@@ -125,7 +130,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 use App\Http\Controllers\SectionController;
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware([
+    'auth',
+    // 'role:admin',
+    'permission:manage_sections'
+])->group(function () {
 
     Route::get('/sections/create', [SectionController::class, 'create']);
 
@@ -141,7 +150,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware([
+    'auth',
+    // 'role:admin',
+    'permission:manage_students'
+])->group(function () {
 
     Route::get('/students/create', [StudentController::class, 'create']);
 
@@ -155,10 +168,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/students/{id}', [StudentController::class, 'update']);
 
     Route::delete('/students/{id}', [StudentController::class, 'destroy']);
-
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware([
+    'auth',
+    // 'role:admin',
+    'permission:manage_staff'
+])->group(function () {
 
     Route::get('/staff/create', [StaffController::class, 'create']);
 
@@ -175,7 +191,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 }); 
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware([
+    'auth',
+    // 'role:admin',
+    'permission:manage_parents'
+])->group(function () {
 
     Route::get('/parents/create', [ParentDetailController::class, 'create']);
 
@@ -191,7 +211,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware([
+    'auth',
+    // 'role:admin',
+    'permission:manage_fees'
+])->group(function () {
 
     Route::get('/fees/create', [FeeController::class, 'create']);
 
@@ -210,7 +234,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::get('/my-fees', [FeeController::class, 'myFees'])
     ->middleware('auth');
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware([
+    'auth',
+    // 'role:admin',
+    'permission:manage_leaves'
+])->group(function () {
 
     Route::get('/leaves', [LeaveController::class, 'index']);
 
@@ -250,7 +278,11 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
+Route::middleware([
+    'auth',
+    // 'role:admin',
+    'permission:view_reports'
+])->group(function () {
 
     Route::get('/reports/students',
         [ReportController::class, 'students']);
@@ -302,3 +334,31 @@ Route::get('/user/profile', function () {
 })->middleware('auth');
 
 require __DIR__.'/auth.php';
+
+Route::get('/permission-test', function () {
+
+    return 'Permission Working';
+
+})->middleware([
+    'auth',
+    'permission:apply_leave'
+]);
+
+Route::middleware([
+    'auth',
+    'role:admin'
+])->group(function () {
+
+    Route::get(
+        '/roles-permissions',
+        [RolePermissionController::class, 'index']
+    );
+    Route::get(
+    '/roles-permissions/{role}/edit',
+    [RolePermissionController::class, 'edit']
+    );
+    Route::put(
+    '/roles-permissions/{role}',
+    [RolePermissionController::class, 'update']
+);
+});

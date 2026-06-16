@@ -126,7 +126,7 @@
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
+                    @can('manage_students')
                     <a href="/students/create"
                        class="bg-blue-600 text-white p-6 rounded-xl shadow-lg hover:bg-blue-700 transition">
 
@@ -139,7 +139,9 @@
                         </p>
 
                     </a>
-
+                    @endcan
+                    
+                    @can('manage_staff')
                     <a href="/staff/create"
                        class="bg-green-600 text-white p-6 rounded-xl shadow-lg hover:bg-green-700 transition">
 
@@ -152,7 +154,9 @@
                         </p>
 
                     </a>
+                    @endcan
 
+                    @can('manage_parents')
                     <a href="/parents/create"
                        class="bg-purple-600 text-white p-6 rounded-xl shadow-lg hover:bg-purple-700 transition">
 
@@ -165,18 +169,21 @@
                         </p>
 
                     </a>
+                    @endcan
+
+                    @can('manage_fees')
                     <a href="/fees/create"
-   class="bg-indigo-600 text-white p-6 rounded-xl shadow-lg hover:bg-indigo-700 transition">
+                        class="bg-indigo-600 text-white p-6 rounded-xl shadow-lg hover:bg-indigo-700 transition">
 
-    <h4 class="font-bold text-lg">
-        Add Fee
-    </h4>
+                        <h4 class="font-bold text-lg">
+                            Add Fee
+                        </h4>
 
-    <p class="text-sm mt-2">
-        Create a new student fee record.
-    </p>
-
-</a>
+                        <p class="text-sm mt-2">
+                            Create a new student fee record.
+                        </p>
+                    </a>
+                    @endcan
                 </div>
 
             </div>

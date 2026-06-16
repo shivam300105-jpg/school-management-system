@@ -62,6 +62,8 @@ $user = User::create([
     'role' => 'parent'
 ]);
 
+$user->assignRole('Parent');
+
 ParentDetail::create([
     'user_id' => $user->id,
     'student_id' => $request->student_id,

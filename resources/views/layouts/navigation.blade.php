@@ -33,34 +33,49 @@
         Dashboard
     </x-nav-link>
 
+    @can('manage_classes')
     <x-nav-link :href="url('/classes')">
         Classes
     </x-nav-link>
+    @endcan
 
+    @can('manage_sections')
     <x-nav-link :href="url('/sections')">
         Sections
     </x-nav-link>
+    @endcan
 
+    @can('manage_students')
     <x-nav-link :href="url('/students')">
         Students
     </x-nav-link>
+    @endcan
 
-    <x-nav-link :href="url('/staff')">
-        Staff
-    </x-nav-link>
+@can('manage_staff')
+<x-nav-link :href="url('/staff')">
+    Staff
+</x-nav-link>
+@endcan
 
-    <x-nav-link :href="url('/parents')">
-        Parents
-    </x-nav-link>
+@can('manage_parents')
+<x-nav-link :href="url('/parents')">
+    Parents
+</x-nav-link>
+@endcan
 
-    <x-nav-link :href="url('/fees')">
-        Fees
-    </x-nav-link>
+@can('manage_fees')
+<x-nav-link :href="url('/fees')">
+    Fees
+</x-nav-link>
+@endcan
 
-    <x-nav-link :href="url('/leaves')">
-        Leave Requests
-    </x-nav-link>
+@can('manage_leaves')
+<x-nav-link :href="url('/leaves')">
+    Leave Requests
+</x-nav-link>
+@endcan
 
+@can('view_reports')
     <div class="relative inline-block group">
 
     <button
@@ -103,8 +118,19 @@
         </a>
 
     </div>
+        <x-nav-link
+    :href="url('/roles-permissions')"
+    :active="request()->is('roles-permissions*')">
 
+    Roles & Permissions
+
+</x-nav-link>
 </div>
+
+
+@endcan
+
+
     @endif
 
     @if(auth()->user()->role == 'student')
@@ -113,17 +139,23 @@
     Dashboard
 </x-nav-link>
 
+@can('view_profile')
 <x-nav-link href="/user/profile">
     My Profile
 </x-nav-link>
+@endcan
 
+@can('view_leave_history')
 <x-nav-link href="/my-leaves">
     My Leaves
 </x-nav-link>
+@endcan
 
+@can('view_fees')
 <x-nav-link href="/my-fees">
     My Fees
 </x-nav-link>
+@endcan
 @endif
 
 @if(auth()->user()->role == 'staff')
@@ -136,9 +168,52 @@
     My Profile
 </x-nav-link>
 
+
 <x-nav-link href="/my-leaves">
     My Leaves
 </x-nav-link>
+
+@can('manage_students')
+<x-nav-link href="/students">
+    Students
+</x-nav-link>
+@endcan
+
+@can('manage_fees')
+<x-nav-link href="/fees">
+    Fees
+</x-nav-link>
+@endcan
+
+@can('manage_classes')
+<x-nav-link href="/classes">
+    Classes
+</x-nav-link>
+@endcan
+
+@can('manage_sections')
+<x-nav-link href="/sections">
+    Sections
+</x-nav-link>
+@endcan
+
+@can('manage_staff')
+<x-nav-link href="/staff">
+    Staff
+</x-nav-link>
+@endcan
+
+@can('manage_parents')
+<x-nav-link href="/parents">
+    Parents
+</x-nav-link>
+@endcan
+
+@can('view_reports')
+<x-nav-link href="/reports/students">
+    Reports
+</x-nav-link>
+@endcan
 
 @endif
 
@@ -149,12 +224,14 @@
     Dashboard
 </x-nav-link>
 
+@can('view_fees')
 <x-nav-link
     :href="url('/my-fees')"
     :active="request()->is('my-fees')"
 >
     Fees
 </x-nav-link>
+@endcan
 
 <x-nav-link
     :href="url('/parent/leaves')"
@@ -163,13 +240,14 @@
     Leaves
 </x-nav-link>
 
+@can('view_profile')
 <x-nav-link
     :href="url('/parent/profile')"
     :active="request()->is('parent/profile')"
 >
     My Profile
 </x-nav-link>
-
+@endcan
 
 
 @endif

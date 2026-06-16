@@ -89,6 +89,8 @@ $user = User::create([
     'role' => 'student'
 ]);
 
+$user->assignRole('Student');
+
 Student::create([
     'user_id' => $user->id,
     'class_id' => $request->class_id,
