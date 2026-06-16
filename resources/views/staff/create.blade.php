@@ -97,6 +97,17 @@
                         >
                     </div>
 
+                    <div>
+    <label class="block text-gray-700 font-medium mb-2">
+        Password
+    </label>
+
+    <input
+        type="password"
+        name="password"
+        class="w-full border border-gray-300 rounded-lg px-4 py-2"
+    >
+</div>
                 </div>
 
                 <div class="mt-6">

@@ -24,6 +24,24 @@ class LeaveController extends Controller
 
     public function store(Request $request)
     {
+        $pendingLeave = Leave::where(
+    'user_id',
+    auth()->id()
+)->where(
+    'status',
+    'Pending'
+)->exists();
+
+if ($pendingLeave) {
+
+return redirect()
+    ->back()
+    ->with(
+        'error',
+        'You already have a pending leave request. New leave can be applied only after admin approval or rejection.'
+    );
+}
+
         $request->validate([
             'leave_type' => 'required',
             'from_date' => 'required',

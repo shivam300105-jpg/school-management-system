@@ -17,6 +17,7 @@
                         <tr class="bg-gray-100">
 
                             <th class="border p-2">User</th>
+                            <th class="border p-2">Role</th>
                             <th class="border p-2">Leave Type</th>
                             <th class="border p-2">From</th>
                             <th class="border p-2">To</th>
@@ -34,6 +35,23 @@
 
                             <td class="border p-2">
                                 {{ $leave->user->name }}
+                            </td>
+                            
+                            <td class="border p-2">
+
+                                @if($leave->user->role == 'staff')
+
+                                    <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded">
+                                        Staff
+                                    </span>
+
+                                @elseif($leave->user->role == 'student')
+
+                                    <span class="bg-green-100 text-green-700 px-2 py-1 rounded">
+                                        Student
+                                    </span>
+                                @endif
+
                             </td>
 
                             <td class="border p-2">

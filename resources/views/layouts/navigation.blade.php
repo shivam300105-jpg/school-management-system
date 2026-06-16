@@ -132,8 +132,12 @@
     Dashboard
 </x-nav-link>
 
-<x-nav-link href="/user/profile">
+<x-nav-link href="/staff/profile">
     My Profile
+</x-nav-link>
+
+<x-nav-link href="/my-leaves">
+    My Leaves
 </x-nav-link>
 
 @endif
@@ -299,12 +303,15 @@
     Dashboard
 </x-responsive-nav-link>
 
-<x-responsive-nav-link href="/user/profile">
+<x-responsive-nav-link href="/staff/profile">
     My Profile
 </x-responsive-nav-link>
 
-@endif
+<x-responsive-nav-link href="/my-leaves">
+    My Leaves
+</x-responsive-nav-link>
 
+@endif
 
 @if(auth()->user()->role == 'parent')
 

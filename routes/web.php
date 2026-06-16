@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\FeeController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StaffController;
 
 Route::get('/', function () {
 
@@ -34,10 +35,15 @@ Route::get('/student/dashboard', function () {
     return view('user-dashboard');
 })->middleware(['auth', 'role:student']);
 
-Route::get('/staff/dashboard', function () {
-    return view('staff.dashboard');
-})->middleware(['auth', 'role:staff']);
+Route::get(
+    '/staff/dashboard',
+    [StaffController::class, 'dashboard']
+)->middleware(['auth', 'role:staff']);
 
+Route::get(
+    '/staff/profile',
+    [StaffController::class, 'profile']
+)->middleware(['auth', 'role:staff']);
 
 Route::get('/parent/dashboard', function () {
 
@@ -151,8 +157,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/students/{id}', [StudentController::class, 'destroy']);
 
 });
-
-use App\Http\Controllers\StaffController;
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
