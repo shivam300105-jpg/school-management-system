@@ -6,93 +6,108 @@
         </h2>
     </x-slot>
 
-    <div class="py-6">
+    <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="bg-white shadow rounded-lg p-6 mb-6">
+            <div class="space-y-6">
 
-                <h2 class="text-3xl font-bold text-gray-800">
-                    Welcome, {{ auth()->user()->name }}
-                </h2>
+                <!-- Welcome Card -->
+                <div class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-lg shadow-lg p-8">
 
-                <p class="text-gray-600 mt-2">
-                    Parent Portal
-                </p>
+                    <h2 class="text-3xl font-bold">
+                        Welcome, {{ auth()->user()->name }}
+                    </h2>
 
-            </div>
+                    <p class="mt-2 text-purple-100">
+                        Parent Portal
+                    </p>
 
-            <div class="bg-white shadow rounded-lg p-6 mb-6">
+                </div>
 
-                <h3 class="text-2xl font-bold mb-4">
-                    Student Information
-                </h3>
+                <!-- Student Information -->
+                <div class="bg-white rounded-lg shadow p-6">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <h3 class="text-2xl font-bold mb-4">
+                        Student Information
+                    </h3>
 
-                    <div>
-                        <strong>Student Name:</strong>
-                        {{ $parent->student->name ?? 'N/A' }}
-                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                    <div>
-                        <strong>Class:</strong>
-                        {{ $parent->student->schoolClass->name ?? 'N/A' }}
-                    </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Student Name</p>
+                            <p class="font-semibold">
+                                {{ $parent->student->name ?? 'N/A' }}
+                            </p>
+                        </div>
 
-                    <div>
-                        <strong>Section:</strong>
-                        {{ $parent->student->section->name ?? 'N/A' }}
-                    </div>
+                        <div>
+                            <p class="text-sm text-gray-500">Class</p>
+                            <p class="font-semibold">
+                                {{ $parent->student->schoolClass->name ?? 'N/A' }}
+                            </p>
+                        </div>
 
-                    <div>
-                        <strong>Roll No:</strong>
-                        {{ $parent->student->roll_no ?? 'N/A' }}
+                        <div>
+                            <p class="text-sm text-gray-500">Section</p>
+                            <p class="font-semibold">
+                                {{ $parent->student->section->name ?? 'N/A' }}
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="text-sm text-gray-500">Roll No</p>
+                            <p class="font-semibold">
+                                {{ $parent->student->roll_no ?? 'N/A' }}
+                            </p>
+                        </div>
+
                     </div>
 
                 </div>
 
-            </div>
+                <!-- Quick Actions -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <a href="/my-fees"
+                       class="bg-blue-600 text-white rounded-lg p-6 shadow hover:shadow-lg transition">
 
-<a href="/my-fees"
-   class="block bg-blue-500 text-white p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold">
+                            Fee Details
+                        </h3>
 
-    <h3 class="text-xl font-bold">
-        Fees
-    </h3>
+                        <p class="mt-2">
+                            View student fee records.
+                        </p>
 
-    <p class="mt-2">
-        View fee details
-    </p>
+                    </a>
 
-</a>
+                    <a href="/parent/leaves"
+                       class="bg-green-600 text-white rounded-lg p-6 shadow hover:shadow-lg transition">
 
-<a href="/parent/leaves"
-   class="block bg-green-500 text-white p-6 rounded-lg shadow hover:bg-green-600">
+                        <h3 class="text-xl font-bold">
+                            Leave Records
+                        </h3>
 
-    <h3 class="text-xl font-bold">
-        Leaves
-    </h3>
+                        <p class="mt-2">
+                            View student leave history.
+                        </p>
 
-    <p class="mt-2">
-        View leave records
-    </p>
+                    </a>
 
-</a>
+                    <a href="/parent/profile"
+                       class="bg-purple-600 text-white rounded-lg p-6 shadow hover:shadow-lg transition">
 
-<a href="/parent/profile"
-   class="block bg-purple-500 text-white p-6 rounded-lg shadow">
+                        <h3 class="text-xl font-bold">
+                            My Profile
+                        </h3>
 
-    <h3 class="text-xl font-bold">
-        Profile
-    </h3>
+                        <p class="mt-2">
+                            View parent profile.
+                        </p>
 
-    <p class="mt-2">
-        Parent information
-    </p>
+                    </a>
 
-</a>
+                </div>
 
             </div>
 

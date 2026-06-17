@@ -1,47 +1,48 @@
 <x-app-layout>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             My Profile
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+    <div class="py-8">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <x-profile-card
+                :name="$student->name ?? Auth::user()->name"
+                role="Student"
 
-                <div class="p-8">
+                :details="[
+                    'Email' => $student->email ?? Auth::user()->email,
+                    'Phone' => $student->phone ?? 'N/A',
+                    'Roll Number' => $student->roll_no ?? 'N/A',
+                    'Class' => $student->schoolClass->name ?? 'N/A',
+                    'Section' => $student->section->name ?? 'N/A',
+                    'Address' => $student->address ?? 'N/A',
+                    'Role' => Auth::user()->role
+                ]"
 
-                    <div class="space-y-4">
-
-                        <div>
-                            <strong>Name:</strong>
-                            {{ Auth::user()->name }}
-                        </div>
-
-                        <div>
-                            <strong>Email:</strong>
-                            {{ Auth::user()->email }}
-                        </div>
-
-                        <div>
-                            <strong>Role:</strong>
-                            {{ Auth::user()->role }}
-                        </div>
-
-                    </div>
-
-                    <a
-                        href="/student/dashboard"
-                        class="inline-block mt-6 bg-blue-600 text-white px-4 py-2 rounded"
-                    >
-                        Back
-                    </a>
-
-                </div>
-
-            </div>
+                :actions="[
+                    [
+                        'title' => 'Dashboard',
+                        'description' => 'Return to dashboard',
+                        'url' => '/student/dashboard'
+                    ],
+                    [
+                        'title' => 'My Fees',
+                        'description' => 'View fee details',
+                        'url' => '/my-fees'
+                    ],
+                    [
+                        'title' => 'Leave History',
+                        'description' => 'View leave records',
+                        'url' => '/my-leaves'
+                    ]
+                ]"
+            />
 
         </div>
     </div>
+
 </x-app-layout>

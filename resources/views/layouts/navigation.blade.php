@@ -1,4 +1,15 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav
+    x-data="{ open: false, scrolled: false }"
+    x-init="
+        window.addEventListener('scroll', () => {
+            scrolled = window.scrollY > 20
+        })
+    "
+:class="scrolled
+? 'sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur-sm shadow-sm'
+: 'sticky top-0 z-50 bg-white border-b border-gray-100'"
+>
+    
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -34,70 +45,87 @@
     </x-nav-link>
 
     @can('manage_classes')
-    <x-nav-link :href="url('/classes')">
-        Classes
-    </x-nav-link>
+<x-nav-link
+    :href="url('/classes')"
+    :active="request()->is('classes*')">
+    Classes
+</x-nav-link>
     @endcan
 
     @can('manage_sections')
-    <x-nav-link :href="url('/sections')">
-        Sections
-    </x-nav-link>
+<x-nav-link
+    :href="url('/sections')"
+    :active="request()->is('sections*')">
+    Sections
+</x-nav-link>
     @endcan
 
     @can('manage_students')
-    <x-nav-link :href="url('/students')">
-        Students
-    </x-nav-link>
+<x-nav-link
+    :href="url('/students')"
+    :active="request()->is('students*')">
+    Students
+</x-nav-link>
     @endcan
 
 @can('manage_staff')
-<x-nav-link :href="url('/staff')">
+<x-nav-link
+    :href="url('/staff')"
+    :active="request()->is('staff*')">
     Staff
 </x-nav-link>
 @endcan
 
 @can('manage_parents')
-<x-nav-link :href="url('/parents')">
+<x-nav-link
+    :href="url('/parents')"
+    :active="request()->is('parents*')">
     Parents
 </x-nav-link>
 @endcan
 
 @can('manage_fees')
-<x-nav-link :href="url('/fees')">
+<x-nav-link
+    :href="url('/fees')"
+    :active="request()->is('fees*')">
     Fees
 </x-nav-link>
 @endcan
 
 @can('manage_leaves')
-<x-nav-link :href="url('/leaves')">
+<x-nav-link
+    :href="url('/leaves')"
+    :active="request()->is('leaves*')">
     Leave Requests
 </x-nav-link>
 @endcan
 
 @can('view_reports')
-    <div class="relative inline-block group">
+<div class="relative inline-block group">
 
-    <button
-        class="inline-flex items-center h-full text-sm font-medium text-gray-500 hover:text-gray-700">
+<button
+    class="inline-flex items-center h-full text-sm font-medium hover:text-gray-700
+    {{ request()->is('reports/*')
+        ? 'border-b-2 border-indigo-500 text-gray-900'
+        : 'text-gray-500' }}">
 
-        Reports
+    Reports
 
-        <svg
-            class="ml-1 h-4 w-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24">
+    <svg
+        class="ml-1 h-4 w-4"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24">
 
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 9l-7 7-7-7"/>
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"/>
 
-        </svg>
+    </svg>
 
-    </button>
+</button>
 
     <div
         class="absolute left-0 hidden group-hover:block bg-white shadow-lg rounded-md w-48 z-50">
@@ -118,58 +146,72 @@
         </a>
 
     </div>
-        <x-nav-link
+
+</div>
+@endcan
+
+<x-nav-link
     :href="url('/roles-permissions')"
     :active="request()->is('roles-permissions*')">
 
     Roles & Permissions
 
 </x-nav-link>
-</div>
-
-
-@endcan
 
 
     @endif
 
     @if(auth()->user()->role == 'student')
 
-<x-nav-link href="/student/dashboard">
+<x-nav-link
+    href="/student/dashboard"
+    :active="request()->is('student/dashboard')">
     Dashboard
 </x-nav-link>
 
 @can('view_profile')
-<x-nav-link href="/user/profile">
+<x-nav-link
+    href="/user/profile"
+    :active="request()->is('user/profile')">
     My Profile
 </x-nav-link>
 @endcan
 
 @can('view_leave_history')
-<x-nav-link href="/my-leaves">
+<x-nav-link
+    href="/my-leaves"
+    :active="request()->is('my-leaves')">
     My Leaves
 </x-nav-link>
 @endcan
 
 @can('view_fees')
-<x-nav-link href="/my-fees">
+<x-nav-link
+    href="/my-fees"
+    :active="request()->is('my-fees')">
     My Fees
 </x-nav-link>
 @endcan
+
 @endif
 
 @if(auth()->user()->role == 'staff')
 
-<x-nav-link href="/staff/dashboard">
+<x-nav-link
+    href="/staff/dashboard"
+    :active="request()->is('staff/dashboard')">
     Dashboard
 </x-nav-link>
 
-<x-nav-link href="/staff/profile">
+<x-nav-link
+    href="/staff/profile"
+    :active="request()->is('staff/profile')">
     My Profile
 </x-nav-link>
 
-
-<x-nav-link href="/my-leaves">
+<x-nav-link
+    href="/my-leaves"
+    :active="request()->is('my-leaves')">
     My Leaves
 </x-nav-link>
 
@@ -220,7 +262,9 @@
 
 @if(auth()->user()->role == 'parent')
 
-<x-nav-link href="/parent/dashboard">
+<x-nav-link
+    href="/parent/dashboard"
+    :active="request()->is('parent/dashboard')">
     Dashboard
 </x-nav-link>
 

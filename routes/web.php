@@ -8,6 +8,7 @@ use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\RolePermissionController;
+use App\Models\Student;
 
 Route::get('/', function () {
 
@@ -329,7 +330,15 @@ Route::get('/user-dashboard', function () {
 
 Route::get('/user/profile', function () {
 
-    return view('user-profile');
+    $student = Student::where(
+        'user_id',
+        auth()->id()
+    )->first();
+
+    return view(
+        'user-profile',
+        compact('student')
+    );
 
 })->middleware('auth');
 

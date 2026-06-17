@@ -6,45 +6,43 @@
         </h2>
     </x-slot>
 
-    <div class="py-6">
-        <div class="max-w-5xl mx-auto">
+    <div class="py-8">
+        <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
 
-            <div class="bg-white shadow rounded-lg p-6">
+            <x-profile-card
+                :name="$parent->father_name"
+                role="Parent"
 
-                <h3 class="text-2xl font-bold mb-6">
-                    Parent Information
-                </h3>
+:details="[
+    'Mother Name' => $parent->mother_name,
+    'Email' => $parent->email,
+    'Phone' => $parent->phone,
+    'Address' => $parent->address,
 
-                <div class="grid grid-cols-2 gap-4">
+    'Student Name' => $parent->student->name ?? 'N/A',
+    'Class' => $parent->student->schoolClass->name ?? 'N/A',
+    'Section' => $parent->student->section->name ?? 'N/A',
+    'Roll Number' => $parent->student->roll_no ?? 'N/A'
+]"
 
-                    <div>
-                        <strong>Father Name:</strong>
-                        {{ $parent->father_name }}
-                    </div>
-
-                    <div>
-                        <strong>Mother Name:</strong>
-                        {{ $parent->mother_name }}
-                    </div>
-
-                    <div>
-                        <strong>Email:</strong>
-                        {{ $parent->email }}
-                    </div>
-
-                    <div>
-                        <strong>Phone:</strong>
-                        {{ $parent->phone }}
-                    </div>
-
-                    <div class="col-span-2">
-                        <strong>Address:</strong>
-                        {{ $parent->address }}
-                    </div>
-
-                </div>
-
-            </div>
+                :actions="[
+                    [
+                        'title' => 'Dashboard',
+                        'description' => 'Return to dashboard',
+                        'url' => '/parent/dashboard'
+                    ],
+                    [
+                        'title' => 'Fee Details',
+                        'description' => 'View fee records',
+                        'url' => '/my-fees'
+                    ],
+                    [
+                        'title' => 'Leave Records',
+                        'description' => 'View leave history',
+                        'url' => '/parent/leaves'
+                    ]
+                ]"
+            />
 
         </div>
     </div>
